@@ -1,0 +1,9 @@
+﻿  main.cpp
+  SHO.cpp
+  OscRenderer.cpp
+  InputEngine.cpp
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\inputengine.cpp(19): warning C4065: switch statement contains 'default' but no 'case' labels
+  CoreManager.cpp
+  Generating Code...
+  Waves and Modern Physics.vcxproj -> C:\Users\Michael Xu\Documents\Visual Studio 2015\Projects\Waves and Modern Physics\Debug\Waves and Modern Physics.exe
+  Waves and Modern Physics.vcxproj -> C:\Users\Michael Xu\Documents\Visual Studio 2015\Projects\Waves and Modern Physics\Debug\Waves and Modern Physics.pdb (Partial PDB)
