@@ -16,6 +16,9 @@
     <Filter Include="Header Files\shaders">
       <UniqueIdentifier>{e9e9eb88-d0a7-4510-a2bc-2624ea066458}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Oscillators">
+      <UniqueIdentifier>{328c14c2-2a63-428c-9e3e-2c1fce77d754}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CoreManager.cpp">
@@ -31,6 +34,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SHO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pendulum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -54,14 +60,23 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SHO.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="Pendulum.h">
+      <Filter>Header Files\Oscillators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader.frag">
+    <None Include="SHOshader1.vs">
       <Filter>Header Files\shaders</Filter>
     </None>
-    <None Include="shader.vs">
+    <None Include="SHOshader1.frag">
+      <Filter>Header Files\shaders</Filter>
+    </None>
+    <None Include="PendulumShader.vs">
+      <Filter>Header Files\shaders</Filter>
+    </None>
+    <None Include="PendulumShader.frag">
       <Filter>Header Files\shaders</Filter>
     </None>
   </ItemGroup>

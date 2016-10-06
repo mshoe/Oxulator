@@ -34,7 +34,7 @@ public:
 
 	// Our opengl context handle
 	SDL_GLContext mainContext;
-	std::string programName = "Augmented Geometry";
+	std::string programName = "Oxulator";
 	bool SetOpenGLAttributes();
 	void PrintSDL_GL_Attributes();
 	void CheckSDLError(int line);

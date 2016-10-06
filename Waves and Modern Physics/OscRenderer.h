@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Shader.h"
 #include "SHO.h"
+#include "Pendulum.h"
 
 #include <GL/glew.h>
 #include <GL/GL.h>
@@ -15,6 +16,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
 
 class OscRenderer
 {
@@ -25,10 +27,17 @@ public:
 	void Init();
 	void Cleanup();
 
+	int selection = 2;
+
 	//SHO
-	SHO *sho;
+	SHO *sho = NULL;
 	void buildSHO(SHO *sho);
 	void renderSHO();
+
+	//Pendulum (not simple)
+	Pendulum *pend = NULL;
+	void buildPend(Pendulum *pend);
+	void renderPend();
 
 	void Render();
 
@@ -48,9 +57,14 @@ public:
 	/*void moveCameraPosition(Camera_Movement direction, GLfloat deltaTime);
 	void moveCameraDirection(GLfloat xoffset, GLfloat yoffset, GLboolean constrainPitch);*/
 
-	//Shapes
+	//Shapes (too lazy right now to make put these somewhere else)
+	//CUBE
 	std::vector<GLfloat> cubeVerts();
 	std::vector<GLuint> cubeInds();
+
+	//SPHERE
+	std::vector<GLfloat> sphereVerts(float radius, unsigned int rings, unsigned int sectors);
+	std::vector<GLuint> sphereInds(unsigned int rings, unsigned int sectors);
 	
 	//
 	GLuint VAO, VBO, EBO;

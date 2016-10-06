@@ -122,6 +122,7 @@
     <ClCompile Include="InputEngine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OscRenderer.cpp" />
+    <ClCompile Include="Pendulum.cpp" />
     <ClCompile Include="SHO.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -130,12 +131,15 @@
     <ClInclude Include="CoreManager.h" />
     <ClInclude Include="InputEngine.h" />
     <ClInclude Include="OscRenderer.h" />
+    <ClInclude Include="Pendulum.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SHO.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader.frag" />
-    <None Include="shader.vs" />
+    <None Include="PendulumShader.frag" />
+    <None Include="PendulumShader.vs" />
+    <None Include="SHOshader1.frag" />
+    <None Include="SHOshader1.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

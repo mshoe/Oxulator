@@ -1,15 +1,5 @@
 #include "SHO.h"
 
-SHO::SHO()
-{
-	k = 1;
-	m = 1;
-	A = 1;
-	w = 1;
-	t = 0;
-	phi = 0;
-}
-
 float SHO::x(float t)
 {
 	return A*std::cos(w*t + phi);

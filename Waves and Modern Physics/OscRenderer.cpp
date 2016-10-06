@@ -22,14 +22,12 @@ void OscRenderer::Init()
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
-	ourShader = new Shader("..\\Waves and Modern Physics\\shader.vs", "..\\Waves and Modern Physics\\shader.frag");
-
-	(*ourShader).Use();
+	
 
 	model = new glm::mat4;
-	camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+	camera = new Camera(glm::vec3(0.0f, 1.0f, 3.0f));
 
-	buildSHO(new SHO);
+	buildPend(new Pendulum);
 }
 
 void OscRenderer::Cleanup()
@@ -50,8 +48,22 @@ void OscRenderer::Cleanup()
 
 void OscRenderer::buildSHO(SHO *sho)
 {
+	if (this->sho != NULL) {
+		SHO *temp = this->sho;
+		delete temp;
+	}
+
 	this->sho = sho;
 	float size = 0.5;
+
+	if (ourShader != NULL) {
+		Shader *temp = ourShader;
+		delete temp;
+	}
+
+	ourShader = new Shader("..\\Waves and Modern Physics\\SHOshader1.vs", "..\\Waves and Modern Physics\\SHOshader1.frag");
+
+	(*ourShader).Use();
 
 	std::vector<GLfloat> vertices = cubeVerts();
 	std::vector<GLuint> indices = cubeInds();
@@ -87,6 +99,8 @@ void OscRenderer::buildSHO(SHO *sho)
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	std::cout << "SHO building complete" << std::endl;
+
+	selection = 1;
 }
 
 void OscRenderer::renderSHO()
@@ -124,9 +138,127 @@ void OscRenderer::renderSHO()
 	SDL_GL_SwapWindow(core->mainWindow);
 }
 
+void OscRenderer::buildPend(Pendulum * pend)
+{
+	if (this->pend != NULL) {
+		Pendulum *temp = this->pend;
+		delete temp;
+	}
+
+	pend->theta = M_PI/1.1f;
+	pend->updateXY();
+	this->pend = pend;
+	float size = 0.1;
+
+	if (ourShader != NULL) {
+		Shader *temp = ourShader;
+		delete temp;
+	}
+
+	ourShader = new Shader("..\\Waves and Modern Physics\\PendulumShader.vs", "..\\Waves and Modern Physics\\PendulumShader.frag");
+
+	(*ourShader).Use();
+
+	std::vector<GLfloat> vertices = sphereVerts(size, 20, 20);
+	std::vector<GLuint> indices = sphereInds(20, 20);
+
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+
+	// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), &vertices.front(), GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices.front(), GL_STATIC_DRAW);
+
+	// Position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	// Color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0); // Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind
+
+	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs), remember: do NOT unbind the EBO, keep it bound to this VAO
+
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	std::cout << "SHO building complete" << std::endl;
+
+	selection = 2;
+}
+
+void OscRenderer::renderPend()
+{
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	(*ourShader).Use();
+
+	// Put this before updatePendulum
+	glBegin(GL_LINES);
+		glVertex3f(0, 0, 0);
+		glVertex3f(-pend->x, -pend->y + pend->L, 0);
+	glEnd();
+
+	pend->updatePendulum(core->deltaTime);
+	
+	
+	
+
+	
+
+	// model
+	GLuint modelLoc = glGetUniformLocation((*ourShader).Program, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(*model));
+
+	// view
+	GLuint viewLoc = glGetUniformLocation((*ourShader).Program, "view");
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera->GetViewMatrix()));
+
+	// perspective
+	glm::mat4 projection = glm::perspective(camera->Zoom, (float)core->image_width / (float)core->image_height, 0.1f, 100.0f);
+	GLuint projectionLoc = glGetUniformLocation((*ourShader).Program, "projection");
+	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
+	GLuint xPosLoc = glGetUniformLocation((*ourShader).Program, "xPos");
+	glUniform1f(xPosLoc, pend->x);
+
+	GLuint yPosLoc = glGetUniformLocation((*ourShader).Program, "yPos");
+	glUniform1f(yPosLoc, pend->y);
+
+	glBindVertexArray(VAO);
+
+	glDrawElements(GL_TRIANGLES, 20 * 20 * 4, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
+
+	
+
+	SDL_GL_SwapWindow(core->mainWindow);
+}
+
 void OscRenderer::Render()
 {
-	renderSHO();
+	switch (selection)
+	{
+	case 1:
+		renderSHO();
+		break;
+	case 2:
+		renderPend();
+		break;
+	default:
+		break;
+	}
 }
 
 void OscRenderer::rotate3(float angle, float x, float y, float z)
@@ -356,5 +488,59 @@ std::vector<GLuint> OscRenderer::cubeInds()
 		indices[i * 6 + 4] = i * 4 + 2;
 		indices[i * 6 + 5] = i * 4 + 3;
 	}
+	return indices;
+}
+
+std::vector<GLfloat> OscRenderer::sphereVerts(float radius, unsigned int rings, unsigned int sectors)
+{
+	std::vector<GLfloat> vertices(rings * sectors * 3 * 3);
+	glm::vec3 color(1, 1, 1);
+    float const R = 1./(float)(rings-1);
+    float const S = 1./(float)(sectors-1);
+    int r, s;
+
+    //vertices.resize(rings * sectors * 3 * 3);
+    //normals.resize(rings * sectors * 3);
+    //texcoords.resize(rings * sectors * 2);
+    std::vector<GLfloat>::iterator v = vertices.begin();
+    //std::vector<GLfloat>::iterator n = normals.begin();
+    //std::vector<GLfloat>::iterator t = texcoords.begin();
+    for(r = 0; r < rings; r++) for(s = 0; s < sectors; s++) {
+            float const y = sin( -M_PI/2.f + M_PI * r * R );
+            float const x = cos(2*M_PI * s * S) * sin( M_PI * r * R );
+            float const z = sin(2*M_PI * s * S) * sin( M_PI * r * R );
+
+            //*t++ = s*S;
+            //*t++ = r*R;
+
+            *v++ = x * radius;
+            *v++ = y * radius;
+            *v++ = z * radius;
+			*v++ = color.x;
+			*v++ = color.y;
+			*v++ = color.z;
+
+            //*n++ = x;
+            //*n++ = y;
+            //*n++ = z;
+    }
+
+	return vertices;
+}
+
+std::vector<GLuint> OscRenderer::sphereInds(unsigned int rings, unsigned int sectors)
+{
+	std::vector<GLuint> indices(rings * sectors * 4);
+    std::vector<GLuint>::iterator i = indices.begin();
+
+	int r, s;
+
+    for(r = 0; r < rings-1; r++) for(s = 0; s < sectors-1; s++) {
+            *i++ = r * sectors + s;
+            *i++ = r * sectors + (s+1);
+            *i++ = (r+1) * sectors + (s+1);
+            *i++ = (r+1) * sectors + s;
+    }
+
 	return indices;
 }

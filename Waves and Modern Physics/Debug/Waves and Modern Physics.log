@@ -1,9 +1,18 @@
-﻿  main.cpp
-  SHO.cpp
-  OscRenderer.cpp
-  InputEngine.cpp
-c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\inputengine.cpp(19): warning C4065: switch statement contains 'default' but no 'case' labels
-  CoreManager.cpp
-  Generating Code...
+﻿  OscRenderer.cpp
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\pendulum.h(11): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(148): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(151): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(498): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(498): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(499): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(499): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(508): warning C4018: '<': signed/unsigned mismatch
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(509): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(509): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(510): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(510): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(511): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(511): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+c:\users\michael xu\documents\visual studio 2015\projects\waves and modern physics\waves and modern physics\oscrenderer.cpp(538): warning C4018: '<': signed/unsigned mismatch
   Waves and Modern Physics.vcxproj -> C:\Users\Michael Xu\Documents\Visual Studio 2015\Projects\Waves and Modern Physics\Debug\Waves and Modern Physics.exe
   Waves and Modern Physics.vcxproj -> C:\Users\Michael Xu\Documents\Visual Studio 2015\Projects\Waves and Modern Physics\Debug\Waves and Modern Physics.pdb (Partial PDB)
